@@ -1,0 +1,47 @@
+type Timestamp = int;
+type FileUploadResult = 
+ record {
+   bucketId: principal;
+   fileId: FileId;
+ };
+type FileInfo = 
+ record {
+   chunkCount: nat;
+   contentDisposition: text;
+   createdAt: Timestamp;
+   filetype: text;
+   name: text;
+   size: nat;
+ };
+type FileId__1 = text;
+type FileId = text;
+type FileData = 
+ record {
+   chunkCount: nat;
+   cid: principal;
+   contentDisposition: text;
+   createdAt: Timestamp;
+   fileId: FileId;
+   filetype: text;
+   name: text;
+   size: nat;
+   uploadedAt: Timestamp;
+ };
+type Container = 
+ service {
+   delFileChunk: (FileId__1, nat, principal) -> (opt null);
+   delFileInfo: (FileId__1, principal) -> (opt null);
+   getAllFiles: () -> (vec FileData);
+   getFileChunk: (FileId__1, nat, principal) -> (opt blob);
+   getFileInfo: (FileId__1, principal) -> (opt FileData);
+   getStatus: () -> (vec record {
+                           principal;
+                           nat;
+                         }) query;
+   putFileChunk: (FileId__1, nat, blob) -> (principal);
+   putFileInfo: (FileInfo) -> (opt FileUploadResult);
+   updateStatus: () -> ();
+   wallet_balance: () -> (nat);
+   wallet_receive: () -> ();
+ };
+service : () -> Container
