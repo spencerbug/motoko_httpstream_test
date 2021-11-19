@@ -1,7 +1,7 @@
 {
   "canisters": {
-    "storage": {
-      "main": "src/storage/Container.mo",
+    "bucket": {
+      "main": "src/bucket/Bucket.mo",
       "type": "motoko"
     }
   },
